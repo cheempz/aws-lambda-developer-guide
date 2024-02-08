@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import java.util.Map;
+import java.util.Random;
 
 import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.model.GetAccountSettingsResponse;
@@ -20,6 +21,28 @@ public class Handler implements RequestHandler<Map<String,String>, String> {
 
         LambdaLogger logger = context.getLogger();
         logger.log("Handler invoked");
+        logger.log(event.toString());
+
+        if (event.containsKey("sleepMs")) {
+            int sleepMs;
+            try {
+                sleepMs = Integer.parseInt(event.get("sleepMs"));
+            } catch (NumberFormatException e) {
+                Random r = new Random();
+                sleepMs = r.nextInt(3000);
+            }
+            logger.log("sleeping " + sleepMs + " milliseconds");
+            try {
+                Thread.sleep(sleepMs);
+            } catch (InterruptedException e) {
+                logger.log(e.getMessage());
+            }
+        }
+
+        if (event.get("exception") != null) {
+            // throw a division by zero
+            int notUsed = 1/0;
+        }
 
         GetAccountSettingsResponse response = null;
         try {
