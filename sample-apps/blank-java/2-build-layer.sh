@@ -12,4 +12,4 @@ else
   mv build/distributions/blank-java.zip build/blank-java-lib.zip
 fi
 
-zip build/blank-java-lib.zip collector-dev.yaml collector-staging.yaml collector-testotelcol.yaml
+zip --junk-paths build/blank-java-lib.zip ../swo-resources/collector-*.yaml

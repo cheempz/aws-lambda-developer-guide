@@ -20,10 +20,10 @@ Resources:
       Environment:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/swi-handler
-          SW_APM_API_TOKEN: !Ref SWToken
-          SW_APM_DATA_CENTER: !Ref SWDataCenter
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
+          SW_APM_API_TOKEN: !Ref SWToken
+          SW_APM_DATA_CENTER: !Ref SWDataCenter
       MemorySize: 2048
       Timeout: 10
       # Function's execution role
