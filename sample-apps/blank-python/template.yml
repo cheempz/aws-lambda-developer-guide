@@ -1,23 +1,46 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Lambda application that calls the Lambda API.
+Parameters:
+  SWToken:
+    Type: String
+    Description: SW_APM_API_TOKEN value
+  SWDataCenter:
+    Type: String
+    Default: na-01
+    Description: SW_APM_DATA_CENTER value
 Resources:
   function:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.8
+      Architectures:
+        - arm64
       CodeUri: function/.
       Description: Call the AWS Lambda API
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-instrument
+          OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
+          OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+          OTEL_METRICS_EXPORTER: otlp_proto_http
+          OTEL_SERVICE_NAME: lin-test-python-lambda-service
+          OTEL_TRACES_EXPORTER: otlp_proto_http
+          SW_APM_API_TOKEN: !Ref SWToken
+          SW_APM_DATA_CENTER: !Ref SWDataCenter
+          SW_APM_EXPERIMENTAL_OTEL_COLLECTOR: "true"
       Timeout: 10
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
         - AWSXrayWriteOnlyAccess
-      Tracing: Active
+      #Tracing: Active
       Layers:
         - !Ref libs
+        - arn:aws:lambda:us-east-1:858939916050:layer:otel-collector-arm64:48
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_2_1_0:1
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:

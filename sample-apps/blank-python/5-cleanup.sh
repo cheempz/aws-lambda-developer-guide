@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-STACK=blank-python
+STACK=lin-test-blank-python
 if [[ $# -eq 1 ]] ; then
     STACK=$1
     echo "Deleting stack $STACK"
