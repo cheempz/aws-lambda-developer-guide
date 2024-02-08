@@ -16,3 +16,5 @@ lib
 __pycache__
 *.pyc
 .DS_Store
+collector-*.yaml
+parameters.json
