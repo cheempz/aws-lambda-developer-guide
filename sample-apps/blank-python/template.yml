@@ -24,12 +24,9 @@ Resources:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-instrument
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
           OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
-          OTEL_METRICS_EXPORTER: otlp_proto_http
           OTEL_SERVICE_NAME: lin-test-python-lambda-service
-          OTEL_TRACES_EXPORTER: otlp_proto_http
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
-          SW_APM_EXPERIMENTAL_OTEL_COLLECTOR: "true"
       Timeout: 10
       # Function's execution role
       Policies:
@@ -40,7 +37,7 @@ Resources:
       Layers:
         - !Ref libs
         - arn:aws:lambda:us-east-1:858939916050:layer:otel-collector-arm64:48
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_2_1_0:1
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_2_1_1:4
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
