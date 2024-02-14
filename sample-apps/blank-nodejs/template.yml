@@ -21,12 +21,10 @@ Resources:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
-          OTEL_EXPORTER_OTLP_PROTOCOL: grpc
           OTEL_SERVICE_NAME: lin-test-nodejs-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
-          SW_APM_SERVICE_KEY: dummy:notused
-      Timeout: 20
+      Timeout: 15
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -36,7 +34,7 @@ Resources:
       Layers:
         - !Ref libs
         - arn:aws:lambda:us-east-1:858939916050:layer:otel-collector:21
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-js:25
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-js:27
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
