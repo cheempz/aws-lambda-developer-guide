@@ -21,10 +21,12 @@ Resources:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/swi-handler
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
+          #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           SW_APM_TRANSACTION_NAME: envVarSetTransaction
+          #SW_APM_DEBUG_LEVEL: trace
       MemorySize: 2048
       Timeout: 10
       # Function's execution role
@@ -49,9 +51,11 @@ Resources:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/swi-handler
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
+          #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
+          #SW_APM_DEBUG_LEVEL: trace
       MemorySize: 2048
       Timeout: 10
       # Function's execution role

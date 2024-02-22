@@ -26,6 +26,7 @@ Resources:
           OTEL_SERVICE_NAME: lin-test-python-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
+          #SW_APM_DEBUG_LEVEL: 6
       Timeout: 10
       # Function's execution role
       Policies:

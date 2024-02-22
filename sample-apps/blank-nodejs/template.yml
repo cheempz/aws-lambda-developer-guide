@@ -24,6 +24,7 @@ Resources:
           OTEL_SERVICE_NAME: lin-test-nodejs-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
+          #SW_APM_LOG_LEVEL: verbose
       Timeout: 15
       # Function's execution role
       Policies:
