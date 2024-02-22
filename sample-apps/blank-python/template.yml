@@ -23,7 +23,6 @@ Resources:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-instrument
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
-          OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
           OTEL_SERVICE_NAME: lin-test-python-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
