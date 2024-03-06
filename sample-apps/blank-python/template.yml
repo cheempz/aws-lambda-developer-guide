@@ -10,6 +10,12 @@ Parameters:
     Default: na-01
     Description: SW_APM_DATA_CENTER value
 Resources:
+  api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: api
+      TracingEnabled: false
+      OpenApiVersion: 3.0.2
   function:
     Type: AWS::Serverless::Function
     Properties:
@@ -21,7 +27,7 @@ Resources:
       Description: Call the AWS Lambda API
       Environment:
         Variables:
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/otel-instrument
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
           OTEL_SERVICE_NAME: lin-test-python-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
@@ -34,10 +40,17 @@ Resources:
         - AWSLambda_ReadOnlyAccess
         - AWSXrayWriteOnlyAccess
       #Tracing: Active
+      Events:
+        getEndpoint:
+          Type: Api
+          Properties:
+            RestApiId: !Ref api
+            Path: /
+            Method: GET
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-arm64-staging-0_0_3:2
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_2_1_1:10
+        - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-arm64-staging-0_0_7:1
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_4_0_3:1
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:

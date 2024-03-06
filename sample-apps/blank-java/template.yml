@@ -19,7 +19,7 @@ Resources:
       Description: Java function
       Environment:
         Variables:
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/swi-handler
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
@@ -38,8 +38,8 @@ Resources:
       #Tracing: Active
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-amd64-staging-0_0_3:2
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-java-2_0_0:2
+        - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-x86_64-staging-0_0_7:1
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-java-2_0_0:10
   function2:
     Type: AWS::Serverless::Function
     Properties:
@@ -49,7 +49,7 @@ Resources:
       Description: Java function
       Environment:
         Variables:
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/swi-handler
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
@@ -67,8 +67,8 @@ Resources:
       #Tracing: Active
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-amd64-staging-0_0_3:2
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-java-2_0_0:2
+        - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-x86_64-staging-0_0_7:1
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-java-2_0_0:10
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:

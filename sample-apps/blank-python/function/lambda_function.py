@@ -32,4 +32,4 @@ def lambda_handler(event, context):
         notused = 1/0
 
     response = client.get_account_settings()
-    return response['AccountUsage']
+    return {"statusCode": 200, "body": jsonpickle.encode(response['AccountUsage'])}

@@ -28,7 +28,7 @@ fi
 while true; do
     read -p "Delete function log group (/aws/lambda/$FUNCTION)? (y/n)" response
     case $response in
-        [Yy]* ) aws logs delete-log-group --log-group-name /aws/lambda/$FUNCTION; break;;
+        [Yy]* ) aws logs delete-log-group --log-group-name /aws/lambda/$FUNCTION || true; break;;
         [Nn]* ) break;;
         * ) echo "Response must start with y or n.";;
     esac
