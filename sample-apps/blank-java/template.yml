@@ -21,6 +21,7 @@ Resources:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
+          #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
           #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
