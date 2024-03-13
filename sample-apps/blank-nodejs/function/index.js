@@ -3,6 +3,8 @@ const AWS = AWSXRay.captureAWS(require('aws-sdk'))
 
 // Create client outside of handler to reuse
 const lambda = new AWS.Lambda()
+// unexpected usage, this creates an extra trace during cold start
+lambda.getAccountSettings().promise()
 
 // Handler
 exports.handler = async function(event, context) {

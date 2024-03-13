@@ -12,6 +12,7 @@ logger.setLevel(logging.INFO)
 #patch_all()
 
 client = boto3.client('lambda')
+# unexpected usage, this creates an extra trace during cold start
 client.get_account_settings()
 
 def lambda_handler(event, context):
