@@ -15,6 +15,8 @@ import software.amazon.awssdk.services.lambda.model.LambdaException;
 public class Handler implements RequestHandler<Map<String,String>, String> {
 
     private static final LambdaClient lambdaClient = LambdaClient.builder().build();
+    // unexpected usage, this creates an extra trace during cold start
+    GetAccountSettingsResponse unused = lambdaClient.getAccountSettings();
 
     @Override
     public String handleRequest(Map<String,String> event, Context context) {
