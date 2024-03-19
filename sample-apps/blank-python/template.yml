@@ -51,7 +51,7 @@ Resources:
       Layers:
         - !Ref libs
         - arn:aws:lambda:us-east-1:858939916050:layer:opentelemetry-collector-arm64-staging-0_0_8:1
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_5_0_0:3
+        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-python-arm64-1_6_0_0:2
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
