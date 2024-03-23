@@ -29,7 +29,7 @@ Resources:
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           SW_APM_TRANSACTION_NAME: envVarSetTransaction
           #SW_APM_DEBUG_LEVEL: trace
-      MemorySize: 2048
+      MemorySize: 512
       Timeout: 10
       # Function's execution role
       Policies:
@@ -60,7 +60,7 @@ Resources:
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           #SW_APM_DEBUG_LEVEL: trace
-      MemorySize: 2048
+      MemorySize: 512
       Timeout: 10
       # Function's execution role
       Policies:
