@@ -37,7 +37,7 @@ Resources:
       Layers:
         - !Ref libs
         - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
-        - arn:aws:lambda:us-east-1:858939916050:layer:solarwinds-apm-js-testing:13
+        - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-js-14_0_0-pre_10:1
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
