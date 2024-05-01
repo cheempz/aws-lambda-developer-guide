@@ -14,8 +14,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: build/distributions/blank-java.zip
-      #Handler: example.Handler::handleRequest
-      Handler: example.Handler
+      Handler: example.Handler::handleRequest
       Runtime: java11
       Description: Java function
       Environment:
@@ -41,13 +40,12 @@ Resources:
       Layers:
         - !Ref libs
         - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
-        - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_2_0:1
+        - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_3_0:1
   function2:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: build/distributions/blank-java.zip
-      #Handler: example.Handler::handleRequest
-      Handler: example.Handler
+      Handler: example.Handler::handleRequest
       Runtime: java11
       Description: Java function
       Environment:
@@ -72,7 +70,7 @@ Resources:
       Layers:
         - !Ref libs
         - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
-        - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_2_0:1
+        - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_3_0:1
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
