@@ -33,6 +33,7 @@ Resources:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
         - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
       #Tracing: Active
       Layers:
         - !Ref libs
