@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lambda_function.lambda_handler
-      Runtime: ruby2.5
+      Runtime: ruby3.2
       CodeUri: function/.
       Description: Call the AWS Lambda API
       Timeout: 10
@@ -15,10 +15,11 @@ Resources:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
         - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
       Environment:
           Variables:
-            GEM_PATH: /opt/ruby/2.5.0
+            GEM_PATH: /opt/ruby/3.2.0
       Layers:
         - !Ref libs
   libs:
@@ -28,5 +29,4 @@ Resources:
       Description: Dependencies for the blank-ruby sample app.
       ContentUri: lib/.
       CompatibleRuntimes:
-        - ruby2.5
-
+        - ruby3.2
