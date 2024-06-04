@@ -16,7 +16,33 @@ Resources:
       StageName: api
       TracingEnabled: false
       OpenApiVersion: 3.0.2
-  function:
+  functionNoInst:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      Architectures:
+        - arm64
+      CodeUri: function/.
+      Description: Call the AWS Lambda API
+      Timeout: 10
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      #Tracing: Active
+      Events:
+        getEndpoint:
+          Type: Api
+          Properties:
+            RestApiId: !Ref api
+            Path: /functionNoInst
+            Method: GET
+      Layers:
+        - !Ref libs
+  functionInst1:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lambda_function.lambda_handler
@@ -28,7 +54,7 @@ Resources:
       Environment:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
-          OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
+          #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
           OTEL_SERVICE_NAME: lin-test-python-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
@@ -47,7 +73,45 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref api
-            Path: /
+            Path: /functionInst1
+            Method: GET
+      Layers:
+        - !Ref libs
+        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-arm64-0_0_8:2
+        - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-python-arm64-1_6_0_3:1
+  functionInst2:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      Architectures:
+        - arm64
+      CodeUri: function/.
+      Description: Call the AWS Lambda API
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
+          #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
+          #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
+          OTEL_SERVICE_NAME: lin-test-python-lambda-service
+          SW_APM_API_TOKEN: !Ref SWToken
+          SW_APM_DATA_CENTER: !Ref SWDataCenter
+          SW_APM_TRANSACTION_NAME: custom-transaction-name
+          #SW_APM_DEBUG_LEVEL: 6
+      Timeout: 10
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      #Tracing: Active
+      Events:
+        getEndpoint:
+          Type: Api
+          Properties:
+            RestApiId: !Ref api
+            Path: /functionInst2
             Method: GET
       Layers:
         - !Ref libs

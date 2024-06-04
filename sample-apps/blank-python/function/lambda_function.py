@@ -5,9 +5,13 @@ import boto3
 import random
 import requests
 import time
+from opentelemetry import trace
 from urllib import parse
 #from aws_xray_sdk.core import xray_recorder
 #from aws_xray_sdk.core import patch_all
+
+# for manual tracing
+tracer = trace.get_tracer(__name__)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -23,6 +27,10 @@ def lambda_handler(event, context):
     logger.info('## CONTEXT\r' + jsonpickle.encode(context))
 
     body = {}
+
+    current_span = trace.get_current_span()
+    current_span.set_attribute("test.attribute", 1)
+
     if 'rpc' in event.keys():
         split = parse.urlsplit(str(event.get("rpc")))
         if split.scheme == '' or split.netloc == '':

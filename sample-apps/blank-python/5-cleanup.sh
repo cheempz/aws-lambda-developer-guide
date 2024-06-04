@@ -1,11 +1,12 @@
 #!/bin/bash
 set -eo pipefail
+source ../helpers.sh
 STACK=lin-test-blank-python
 if [[ $# -eq 1 ]] ; then
     STACK=$1
     echo "Deleting stack $STACK"
 fi
-FUNCTION=$(aws cloudformation describe-stack-resource --stack-name $STACK --logical-resource-id function --query 'StackResourceDetail.PhysicalResourceId' --output text)
+
 aws cloudformation delete-stack --stack-name $STACK
 echo "Deleted $STACK stack."
 
@@ -25,13 +26,15 @@ if [ -f bucket-name.txt ]; then
     fi
 fi
 
-while true; do
-    read -p "Delete function log group (/aws/lambda/$FUNCTION)? (y/n)" response
-    case $response in
-        [Yy]* ) aws logs delete-log-group --log-group-name /aws/lambda/$FUNCTION || true; break;;
-        [Nn]* ) break;;
-        * ) echo "Response must start with y or n.";;
-    esac
+for fn in $(_get_function_ids $STACK); do
+    while true; do
+        read -p "Delete function log group (/aws/lambda/$fn)? (y/n)" response
+        case $response in
+            [Yy]* ) aws logs delete-log-group --log-group-name /aws/lambda/$fn || true; break;;
+            [Nn]* ) break;;
+            * ) echo "Response must start with y or n.";;
+        esac
+    done
 done
 
 rm -f out.yml out.json function/*.pyc
