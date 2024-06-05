@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-STACK=lin-test-blank-java
+STACK=apm-bench-java
 ARTIFACT_BUCKET=$(cat bucket-name.txt)
 TEMPLATE=template.yml
 PARAM_FILE="file://../swo-resources/parameters-${PARAM:-prod}.json"

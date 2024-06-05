@@ -10,7 +10,13 @@ Parameters:
     Default: na-01
     Description: SW_APM_DATA_CENTER value
 Resources:
-  function:
+  api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: api
+      TracingEnabled: false
+      OpenApiVersion: 3.0.2
+  functionNoInst:
     Type: AWS::Serverless::Function
     Properties:
       Handler: lambda_function.lambda_handler
@@ -24,26 +30,60 @@ Resources:
         - AWSLambda_ReadOnlyAccess
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
-      Tracing: Active
+      #Tracing: Active
+      Events:
+        getEndpoint:
+          Type: Api
+          Properties:
+            RestApiId: !Ref api
+            Path: /functionNoInst
+            Method: GET
+      Environment:
+          Variables:
+            GEM_PATH: /opt/ruby/3.2.0
+      Layers:
+        - !Ref libs
+  functionInst1:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: ruby3.2
+      CodeUri: function/.
+      Description: Call the AWS Lambda API
+      Timeout: 10
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      #Tracing: Active
+      Events:
+        getEndpoint:
+          Type: Api
+          Properties:
+            RestApiId: !Ref api
+            Path: /functionInst1
+            Method: GET
       Environment:
           Variables:
             GEM_PATH: /opt/ruby/3.2.0
             AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
-            OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
+            #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
             #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
-            OTEL_SERVICE_NAME: lin-test-ruby-lambda-service
+            OTEL_SERVICE_NAME: apm-bench-ruby-lambda-service
             SW_APM_API_TOKEN: !Ref SWToken
             SW_APM_DATA_CENTER: !Ref SWDataCenter
             #SW_APM_DEBUG_LEVEL: 6
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
+        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_9:1
         - arn:aws:lambda:us-east-1:858939916050:layer:xuan-cao-ruby-layer:25
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: blank-ruby-lib
-      Description: Dependencies for the blank-ruby sample app.
+      LayerName: apm-bench-ruby-lib
+      Description: Dependencies for the apm benchmark app.
       ContentUri: lib/.
       CompatibleRuntimes:
         - ruby3.2

@@ -53,7 +53,7 @@ Resources:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
-          OTEL_SERVICE_NAME: lin-test-nodejs-lambda-service
+          OTEL_SERVICE_NAME: apm-bench-nodejs-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           #SW_APM_LOG_LEVEL: verbose
@@ -75,7 +75,7 @@ Resources:
             Method: GET
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
+        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_9:1
         - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-js-14_0_2:1
   functionInst2:
     Type: AWS::Serverless::Function
@@ -89,7 +89,7 @@ Resources:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
           #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /var/task/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
-          OTEL_SERVICE_NAME: lin-test-nodejs-lambda-service
+          OTEL_SERVICE_NAME: apm-bench-nodejs-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           SW_APM_TRANSACTION_NAME: custom-transaction-name
@@ -112,13 +112,13 @@ Resources:
             Method: GET
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
+        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_9:1
         - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-js-14_0_2:1
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: blank-nodejs-lib
-      Description: Dependencies for the blank sample app.
+      LayerName: apm-bench-nodejs-lib
+      Description: Dependencies for the apm benchmark app.
       ContentUri: lib/.
       CompatibleRuntimes:
         - nodejs18.x

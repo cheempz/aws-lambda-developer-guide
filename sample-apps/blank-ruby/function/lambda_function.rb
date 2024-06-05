@@ -5,7 +5,7 @@ require 'aws-sdk-lambda'
 $client = Aws::Lambda::Client.new()
 $client.get_account_settings()
 
-require 'aws-xray-sdk/lambda'
+#require 'aws-xray-sdk/lambda'
 
 def lambda_handler(event:, context:)
   logger = Logger.new($stdout)
@@ -19,5 +19,6 @@ def lambda_handler(event:, context:)
   logger.info(event.to_json)
   logger.info('## CONTEXT')
   logger.info(context)
-  $client.get_account_settings().account_usage.to_h
+  body = $client.get_account_settings().account_usage.to_h
+  { "statusCode":200, "body": body.to_s }
 end

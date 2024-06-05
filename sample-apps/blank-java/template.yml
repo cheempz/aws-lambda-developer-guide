@@ -13,7 +13,7 @@ Resources:
   functionNoInst:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/blank-java.zip
+      CodeUri: build/distributions/apm-bench-java.zip
       Handler: example.Handler::handleRequest
       Runtime: java11
       Description: Java function
@@ -31,7 +31,7 @@ Resources:
   functionInst1:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/blank-java.zip
+      CodeUri: build/distributions/apm-bench-java.zip
       Handler: example.Handler::handleRequest
       Runtime: java11
       Description: Java function
@@ -41,7 +41,7 @@ Resources:
           #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
           #OTEL_JAVAAGENT_DEBUG: "true"
-          OTEL_SERVICE_NAME: lin-test-java-lambda-service
+          OTEL_SERVICE_NAME: apm-bench-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           #SW_APM_DEBUG_LEVEL: trace
@@ -56,12 +56,12 @@ Resources:
       #Tracing: Active
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
+        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_9:1
         - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_3_0:1
   functionInst2:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/blank-java.zip
+      CodeUri: build/distributions/apm-bench-java.zip
       Handler: example.Handler::handleRequest
       Runtime: java11
       Description: Java function
@@ -71,7 +71,7 @@ Resources:
           #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
           #OTEL_JAVAAGENT_DEBUG: "true"
-          OTEL_SERVICE_NAME: lin-test-java-lambda-service
+          OTEL_SERVICE_NAME: apm-bench-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
           SW_APM_TRANSACTION_NAME: custom-transaction-name
@@ -87,13 +87,13 @@ Resources:
       #Tracing: Active
       Layers:
         - !Ref libs
-        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
+        - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_9:1
         - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_3_0:1
   libs:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: blank-java-lib
-      Description: Dependencies for the blank-java sample app.
-      ContentUri: build/blank-java-lib.zip
+      LayerName: apm-bench-java-lib
+      Description: Dependencies for the apm benchmark app.
+      ContentUri: build/apm-bench-java-lib.zip
       CompatibleRuntimes:
         - java11

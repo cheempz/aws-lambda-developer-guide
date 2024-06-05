@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 source ../helpers.sh
-STACK=lin-test-blank-python
+STACK=apm-bench-python
 functions=$(_get_function_ids $STACK function)
 api_id=$(_get_api_id $STACK api)
 api_endpoint=https://${api_id}.execute-api.us-east-1.amazonaws.com/api

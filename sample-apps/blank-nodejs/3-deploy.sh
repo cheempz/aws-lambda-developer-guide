@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-STACK=lin-test-blank-nodejs
+STACK=apm-bench-nodejs
 ARTIFACT_BUCKET=$(cat bucket-name.txt)
 PARAM_FILE="file://../swo-resources/parameters-${PARAM:-prod}.json"
 

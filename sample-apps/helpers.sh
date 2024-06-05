@@ -24,7 +24,7 @@ _get_api_id() {
 _delete_bucket() {
     if [ -f bucket-name.txt ]; then
         ARTIFACT_BUCKET=$(cat bucket-name.txt)
-        if [[ ! $ARTIFACT_BUCKET =~ lambda-artifacts-[a-z0-9]{16} ]] ; then
+        if [[ ! $ARTIFACT_BUCKET =~ apm-bench-.*-lambda-artifacts ]] ; then
             echo "Bucket was not created by this application. Skipping."
         else
             while true; do

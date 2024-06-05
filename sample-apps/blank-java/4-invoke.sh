@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 source ../helpers.sh
-STACK=lin-test-blank-java
+STACK=apm-bench-java
 functions=$(_get_function_ids $STACK function)
 
 while true; do

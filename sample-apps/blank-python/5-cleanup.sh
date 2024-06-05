@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 source ../helpers.sh
-STACK=lin-test-blank-python
+STACK=apm-bench-python
 if [[ $# -eq 1 ]] ; then
     STACK=$1
     echo "Deleting stack $STACK"

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eo pipefail
-STACK=lin-test-blank-python
+STACK=apm-bench-python
 ARTIFACT_BUCKET=$(cat bucket-name.txt)
 PARAM_FILE="file://../swo-resources/parameters-${PARAM:-prod}.json"
 

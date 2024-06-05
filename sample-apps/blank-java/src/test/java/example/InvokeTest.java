@@ -23,7 +23,7 @@ class InvokeTest {
   @ParameterizedTest
   @Event(value = "event.json", type = Map.class)
   void invokeTest(Map<String, String> event) {
-      AWSXRay.beginSegment("blank-java-test");
+      AWSXRay.beginSegment("apm-bench-java-test");
       Context context = new TestContext();
       Handler handler = new Handler();
       String result = handler.handleRequest(event, context);
