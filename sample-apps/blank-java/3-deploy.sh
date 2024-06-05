@@ -3,7 +3,7 @@ set -eo pipefail
 STACK=lin-test-blank-java
 ARTIFACT_BUCKET=$(cat bucket-name.txt)
 TEMPLATE=template.yml
-PARAM_FILE="file://../swo-resources/parameters-${PARAM:-dev}.json"
+PARAM_FILE="file://../swo-resources/parameters-${PARAM:-prod}.json"
 
 if [ $1 ]
 then

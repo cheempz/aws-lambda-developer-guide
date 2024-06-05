@@ -46,7 +46,7 @@ exports.handler = async function(event, context) {
   }
 
   response.awsclient = await getAccountSettings()
-  return response
+  return {"statusCode": 200, "body": JSON.stringify(response)}
 }
 
 // Use SDK client

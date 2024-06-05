@@ -10,7 +10,25 @@ Parameters:
     Default: na-01
     Description: SW_APM_DATA_CENTER value
 Resources:
-  function1:
+  functionNoInst:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/blank-java.zip
+      Handler: example.Handler::handleRequest
+      Runtime: java11
+      Description: Java function
+      MemorySize: 512
+      Timeout: 10
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      #Tracing: Active
+      Layers:
+        - !Ref libs
+  functionInst1:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: build/distributions/blank-java.zip
@@ -20,13 +38,12 @@ Resources:
       Environment:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
-          OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
+          #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
           #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
-          SW_APM_TRANSACTION_NAME: envVarSetTransaction
           #SW_APM_DEBUG_LEVEL: trace
       MemorySize: 512
       Timeout: 10
@@ -41,7 +58,7 @@ Resources:
         - !Ref libs
         - arn:aws:lambda:us-east-1:851060098468:layer:opentelemetry-collector-x86_64-0_0_8:2
         - arn:aws:lambda:us-east-1:851060098468:layer:solarwinds-apm-java-2_3_0:1
-  function2:
+  functionInst2:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: build/distributions/blank-java.zip
@@ -51,12 +68,13 @@ Resources:
       Environment:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/solarwinds-apm/wrapper
-          OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
+          #OPENTELEMETRY_COLLECTOR_CONFIG_FILE: /opt/collector-dev.yaml
           #OPENTELEMETRY_EXTENSION_LOG_LEVEL: info
           #OTEL_JAVAAGENT_DEBUG: "true"
           OTEL_SERVICE_NAME: lin-test-java-lambda-service
           SW_APM_API_TOKEN: !Ref SWToken
           SW_APM_DATA_CENTER: !Ref SWDataCenter
+          SW_APM_TRANSACTION_NAME: custom-transaction-name
           #SW_APM_DEBUG_LEVEL: trace
       MemorySize: 512
       Timeout: 10
